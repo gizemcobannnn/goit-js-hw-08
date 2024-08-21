@@ -1,3 +1,4 @@
+console.log("homework 8")
 const images = [
     {
       preview:
@@ -63,3 +64,30 @@ const images = [
       description: 'Lighthouse Coast Sea',
     },
   ];
+
+
+createListElement();
+
+
+
+  function createListElement(){
+
+    const galleryUL = document.querySelector("ul.gallery");
+    const createdA = document.createElement("a");
+    createdA.classList.add("gallery-link");
+    createdA.href="large-image.jpg";
+
+    const createdImg = document.createElement("img");
+    createdImg.classList.add("gallery-image");
+    createdImg.src="small-image.jpg";
+    createdImg.dataset.source="large-image.jpg";
+    createdImg.alt="Image description";
+
+    createdA.appendChild(createdImg);
+
+    const createdLi = document.createElement("li");
+    createdLi.classList.add("gallery-item");
+
+    createdLi.appendChild(createdA);
+    galleryUL.appendChild(createdLi);
+  }
