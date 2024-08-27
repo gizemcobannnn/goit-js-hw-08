@@ -77,6 +77,7 @@ createListElement(images);
     const galleryUL = document.querySelector("ul.gallery");
     const createdA = document.createElement("a");
     createdA.classList.add("gallery-link");
+    createdA.setAttribute("onclick","return false");
     createdA.href = original;
 
     const createdImg = document.createElement("img");
@@ -102,14 +103,22 @@ createListElement(images);
   });
 
 
- document.onkeydown = function(event){
-  let isEscape = false;
-  if("key" in event){
-    isEscape = (event.key === "Escape" || event.key === "Esc")
-  }else{
-    isEscape = (event.keyCode === 27);
+ document.addEventListener("keydown",(event)=>{
+  event.preventDefault();
+  if(event.key === "Escape" || event.key === "Esc"  || event.keyCode === 27){
+    console.log("esc is pressed")
   }
-  if (isEscape) {
-    alert("Escape Key Was Pressed");
- }
- };
+ });
+
+
+ const imagesDom = document.querySelectorAll('.gallery-image');
+
+ imagesDom.forEach(image => {
+    image.addEventListener('click', (event) => {
+        const instance = basicLightbox.create(`
+            <img src="${event.target.src.replace('__480', '_1280')}" alt="${event.target.alt}">
+        `);
+
+        instance.show();
+    });
+});
