@@ -66,22 +66,24 @@ const images = [
   ];
 
 
-createListElement();
+createListElement(images);
 
+  function createListElement(images){
 
+    for (const image of images) {
+      const { preview, original, description } = image;
 
-  function createListElement(){
 
     const galleryUL = document.querySelector("ul.gallery");
     const createdA = document.createElement("a");
     createdA.classList.add("gallery-link");
-    createdA.href="large-image.jpg";
+    createdA.href = original;
 
     const createdImg = document.createElement("img");
     createdImg.classList.add("gallery-image");
-    createdImg.src="small-image.jpg";
-    createdImg.dataset.source="large-image.jpg";
-    createdImg.alt="Image description";
+    createdImg.src= preview;
+    createdImg.dataset.source= original;
+    createdImg.alt = description;
 
     createdA.appendChild(createdImg);
 
@@ -90,4 +92,24 @@ createListElement();
 
     createdLi.appendChild(createdA);
     galleryUL.appendChild(createdLi);
+
+    }
   }
+
+  const gallery = document.querySelector("ul.gallery");
+  gallery.addEventListener("click",(event)=>{
+    console.log(event.target);
+  });
+
+
+ document.onkeydown = function(event){
+  let isEscape = false;
+  if("key" in event){
+    isEscape = (event.key === "Escape" || event.key === "Esc")
+  }else{
+    isEscape = (event.keyCode === 27);
+  }
+  if (isEscape) {
+    alert("Escape Key Was Pressed");
+ }
+ };
