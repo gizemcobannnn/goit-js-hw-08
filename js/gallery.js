@@ -97,12 +97,6 @@ createListElement(images);
     }
   }
 
-  const gallery = document.querySelector("ul.gallery");
-  gallery.addEventListener("click",(event)=>{
-    console.log(event.target);
-  });
-
-
  const imagesDom = document.querySelectorAll('.gallery-image');
  let currentLightBox = null;
 
