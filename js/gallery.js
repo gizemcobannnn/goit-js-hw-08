@@ -97,34 +97,38 @@ createListElement(images);
     }
   }
 
- const imagesDom = document.querySelectorAll('.gallery-image');
+ const imagesDom = document.querySelectorAll('.gallery');
  let currentLightBox = null;
 
- imagesDom.forEach(image => {
-    image.addEventListener('click', (event) => {
-      const ulElement = document.querySelector("ul.gallery");
-      console.log("XXXXXXXXXXXXXX")
-      let ulWidth = ulElement.offsetWidth;
-      let ulHeight = ulElement.offsetHeight;
-        const instance = basicLightbox.create(`
-            <img src="${event.target.src.replace('__480', '_1280')}" alt="${event.target.alt}" style="width:${ulWidth}px; height:${ulWidth}px">
-        `);
-
-        instance.show();
-        currentLightBox =  instance;
-
-        
-    const onKeyDownEsc = (event)=>{
-      if(event.key === "Escape" || event.key === "Esc" && currentLightBox){
-      currentLightBox.close();
-      document.removeEventListener("keydown",onKeyDownEsc);
-      currentLightBox = null;
+  imagesDom.forEach(image => 
+    {
+      image.addEventListener('click', (event) => {
+  
+        if (event.target.nodeName !== "IMG") {
+          return; // kullanıcı fotografların arasına tıkladı
+        }
+        const selectedImageSrc = event.target.dataset.source;
+        const selectedImageAlt = event.target.alt;
+  // asagidaki galeriyi sadece boyutunu almak icin dom secimi yapıyorum.
+        const ulElement = document.querySelector("ul.gallery");
+        let ulWidth = ulElement.offsetWidth;
+        let ulHeight = ulElement.offsetHeight;
+  
+          const modal = basicLightbox.create(`<img src="${selectedImageSrc}" alt="${selectedImageAlt}" style="width:${ulWidth}px; height:${ulHeight}px"/>`);
+          modal.show();
+          currentLightBox =  modal;
+  
+          
+      const onKeyDownEsc = (event)=>{
+        if((event.key === "Escape" || event.key === "Esc") && currentLightBox){
+        currentLightBox.close();
+        document.removeEventListener("keydown",onKeyDownEsc);
+        currentLightBox = null;
+      }
+  
     }
-
-  }
 
     document.addEventListener("keydown",onKeyDownEsc);
     
     });
-});
-
+  });
